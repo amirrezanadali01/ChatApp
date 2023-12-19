@@ -9,5 +9,5 @@ class JwtTokenModel {
   JwtTokenModel({required this.access, this.refresh});
 
   factory JwtTokenModel.fromJson(Map json) =>
-      JwtTokenModel(access: json['access'], refresh: 'refresh');
+      JwtTokenModel(access: json['access'], refresh: json['refresh']);
 }

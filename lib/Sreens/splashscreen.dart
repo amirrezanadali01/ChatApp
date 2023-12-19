@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: FutureBuilder<bool>(
-            future: verifyToken(),
+            future: JwtTokenApi().verifyToken(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data == true) {
