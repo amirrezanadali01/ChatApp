@@ -2,6 +2,13 @@ class Config {
   static const String domainName = 'http://192.168.1.102:8000';
 }
 
+class Hedears {
+  static const acceptJson = {
+    "Accept": "application/json",
+    "content-type": "application/json"
+  };
+}
+
 class JwtTokenModel {
   final String? refresh;
   final String access;

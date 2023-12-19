@@ -7,7 +7,9 @@ class JwtTokenApi {
   Future<bool> updateAccessToken(String refresh) async {
     http.Response response = await http.post(
         Uri.parse('${Config.domainName}/api/token/refresh/'),
+        headers: Hedears.acceptJson,
         body: jsonEncode(<String, String>{'refresh': refresh}));
+
     if (response.statusCode == 200) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final JwtTokenModel jwtToken =
@@ -23,11 +25,11 @@ class JwtTokenApi {
   Future<bool> verifyToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? accessToken = prefs.getString('access');
-
+    final String? refreshToken = prefs.getString('refresh');
     if (accessToken == null) {
       return false;
     } else {
-      bool isLogin = await updateAccessToken(accessToken);
+      bool isLogin = await updateAccessToken(refreshToken!);
       if (isLogin) {
         return true;
       } else {
@@ -39,7 +41,9 @@ class JwtTokenApi {
   Future<bool> login(username, password) async {
     http.Response response = await http.post(
         Uri.parse('${Config.domainName}/api/token/'),
-        body: {"username": username, "password": password});
+        headers: Hedears.acceptJson,
+        body: jsonEncode(
+            <String, String>{"username": username, "password": password}));
 
     final JwtTokenModel jwtModel =
         JwtTokenModel.fromJson(jsonDecode(response.body));
