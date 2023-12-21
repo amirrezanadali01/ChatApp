@@ -20,30 +20,11 @@ class _LoginState extends State<Login> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: TextFormField(
-                controller: usernameController,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.person),
-                  label: Text('Username'),
-                  border: OutlineInputBorder(),
-                ),
-              ),
+            LoginInput(
+              controller: usernameController,
             ),
             const SizedBox(height: 30),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: TextFormField(
-                obscureText: true,
-                controller: passwordController,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.key),
-                  label: Text('Password'),
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
+            LoginInput(controller: passwordController, isPassword: true),
             const SizedBox(height: 30),
             SizedBox(
                 width: MediaQuery.of(context).size.width * 0.8,
@@ -63,6 +44,33 @@ class _LoginState extends State<Login> {
                     },
                     child: const Text('Login')))
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class LoginInput extends StatelessWidget {
+  const LoginInput({
+    super.key,
+    required this.controller,
+    this.isPassword = false,
+  });
+
+  final TextEditingController controller;
+  final bool isPassword;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.8,
+      child: TextFormField(
+        obscureText: isPassword == true ? true : false,
+        controller: controller,
+        decoration: InputDecoration(
+          prefixIcon: Icon(isPassword == true ? Icons.key : Icons.person),
+          label: Text(isPassword == true ? 'password' : 'username'),
+          border: const OutlineInputBorder(),
         ),
       ),
     );
