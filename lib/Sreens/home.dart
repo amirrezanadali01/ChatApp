@@ -1,4 +1,6 @@
+import 'package:chatapp/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -9,9 +11,38 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   @override
+  void initState() {
+    Future.delayed(Duration.zero).then((value) {
+      final userProvide = Provider.of<UserProvider>(context, listen: false);
+      userProvide.getTotalUser();
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('home')),
-    );
+    return Scaffold(body: Consumer<UserProvider>(
+      builder: (context, value, child) {
+        if (value.isLoading == true) {
+          return const CircularProgressIndicator();
+        } else {
+          return ListView.builder(
+              itemCount: value.users.length,
+              itemBuilder: (context, index) {
+                return SizedBox(
+                  height: 100,
+                  child: Card(
+                    child: Center(
+                      child: Text(
+                        value.users[index].username,
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                );
+              });
+        }
+      },
+    ));
   }
 }

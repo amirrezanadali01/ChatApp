@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Config {
   static const String domainName = 'http://192.168.1.102:8000';
 }
@@ -17,4 +19,10 @@ class JwtTokenModel {
 
   factory JwtTokenModel.fromJson(Map json) =>
       JwtTokenModel(access: json['access'], refresh: json['refresh']);
+}
+
+class UserModel {
+  final String username;
+  UserModel({required this.username});
+  factory UserModel.fromJson(Map json) => UserModel(username: json['username']);
 }

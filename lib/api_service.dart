@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:chatapp/models.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -56,5 +57,15 @@ class JwtTokenApi {
     } else {
       return false;
     }
+  }
+}
+
+class UserApi {
+  Future<List<UserModel>> getTotalUser() async {
+    http.Response response =
+        await http.get(Uri.parse('${Config.domainName}/users/total/'));
+
+    return List<UserModel>.from(
+        jsonDecode(response.body).map((x) => UserModel.fromJson(x)));
   }
 }
