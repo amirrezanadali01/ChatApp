@@ -12,6 +12,7 @@ class UserProvider extends ChangeNotifier {
   Future<void> getTotalUser() async {
     isLoading = true;
     notifyListeners();
+    await JwtTokenApi().verifyToken();
     _users = await userapi.getTotalUser();
     isLoading = false;
     notifyListeners();
@@ -19,7 +20,22 @@ class UserProvider extends ChangeNotifier {
 }
 
 class ChatProvider extends ChangeNotifier {
-  final WebSocketChannel _channel = WebSocketChannel.connect(
-    Uri.parse('ws://localhost:8000/ws/chat/'),
-  );
+  // final WebSocketChannel _channel = WebSocketChannel.connect(
+  //   Uri.parse('ws://localhost:8000/ws/chat/'),
+  // );
+
+  List<ChatModel> _chatsTotal = [];
+  List<ChatModel> get chatTotal => _chatsTotal;
+
+  bool isLoading = false;
+  final ChatApi chatapi = ChatApi();
+
+  Future<void> getTotalChat(int receiver) async {
+    isLoading = true;
+    notifyListeners();
+    await JwtTokenApi().updateAccessToken();
+    _chatsTotal = await chatapi.getTotalChat(receiver);
+    isLoading = false;
+    notifyListeners();
+  }
 }

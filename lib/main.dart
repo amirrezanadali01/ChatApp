@@ -14,8 +14,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => UserProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
+        ChangeNotifierProvider<ChatProvider>(create: (_) => ChatProvider())
+      ],
       child: MaterialApp(
         title: 'ChatApp',
         theme: ThemeData(
@@ -30,7 +33,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: const TestChat(),
+        home: const SplashScreen(),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:chatapp/Sreens/chat.dart';
 import 'package:chatapp/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,11 +32,18 @@ class _HomeState extends State<Home> {
               itemBuilder: (context, index) {
                 return SizedBox(
                   height: 100,
-                  child: Card(
-                    child: Center(
-                      child: Text(
-                        value.users[index].username,
-                        style: const TextStyle(fontSize: 20),
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Chat(receiver: value.users[index].id))),
+                    child: Card(
+                      child: Center(
+                        child: Text(
+                          value.users[index].username,
+                          style: const TextStyle(fontSize: 20),
+                        ),
                       ),
                     ),
                   ),
