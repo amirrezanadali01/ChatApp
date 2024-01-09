@@ -1,6 +1,7 @@
 import 'package:chatapp/api_service.dart';
 import 'package:chatapp/models.dart';
 import 'package:flutter/material.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class UserProvider extends ChangeNotifier {
   List<UserModel> _users = [];
@@ -15,4 +16,10 @@ class UserProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
+}
+
+class ChatProvider extends ChangeNotifier {
+  final WebSocketChannel _channel = WebSocketChannel.connect(
+    Uri.parse('ws://localhost:8000/ws/chat/'),
+  );
 }

@@ -1,5 +1,6 @@
 import 'package:chatapp/Sreens/splashscreen.dart';
 import 'package:chatapp/provider.dart';
+import 'package:chatapp/test.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: const SplashScreen(),
+        home: const TestChat(),
       ),
     );
   }
